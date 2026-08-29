@@ -1,0 +1,21 @@
+{
+  "name": "@heurist/client-core",
+  "version": "0.1.0",
+  "description": "Shared contracts, API transport, host adapters and bootstrap utilities for Heurist client modules",
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "files": ["src", "README.md"],
+  "exports": {
+    ".": "./src/index.js",
+    "./api": "./src/api/index.js",
+    "./host": "./src/host/index.js",
+    "./config": "./src/config/index.js",
+    "./contracts": "./src/contracts/index.js"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
