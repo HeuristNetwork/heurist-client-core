@@ -19,6 +19,10 @@ export class HostAdapter {
     throw new Error(`Record editing is not supported by this host (${recordId})`);
   }
 
+  async addRecord(recordTypeId) {
+    throw new Error(`Record creation is not supported by this host (${recordTypeId})`);
+  }
+
   /** Return optional capabilities. Concrete modules define their public keys. */
   getCapabilities() { return {}; }
 
