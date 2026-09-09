@@ -16,7 +16,8 @@
     "./contracts": "./src/contracts/index.js",
     "./ui": "./src/ui/index.js",
     "./widgets": "./src/widgets/index.js",
-    "./ui/heurist-ui.css": "./src/ui/heurist-ui.css"
+    "./ui/heurist-ui.css": "./src/ui/heurist-ui.css",
+    "./utils": "./src/utils/index.js"
   },
   "scripts": {
     "test": "node --test"
