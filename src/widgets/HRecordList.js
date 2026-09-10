@@ -36,6 +36,7 @@ export class HRecordList extends HBaseWidget {
     onRecordContentRequest,
     onViewRecord,
     onExport,
+    onViewModeChange,
   }) {
     this.attach(container, normalizeOptions(options));
     Object.assign(this, {
@@ -47,6 +48,7 @@ export class HRecordList extends HBaseWidget {
       onRecordContentRequest,
       onViewRecord,
       onExport,
+      onViewModeChange,
     });
     this.selected = new Set();
     this.collected = new Set();
@@ -105,8 +107,17 @@ export class HRecordList extends HBaseWidget {
       void this._requestPage();
     });
     this.listen(this.viewModeSelect, "change", () => {
-      this.options.viewMode = normalizeViewMode(this.viewModeSelect.value);
+      const mode = this.viewModeSelect.value;
+      if (mode === "datatable") {
+        // The Table choice belongs to the DataTables engine. Keep the current
+        // RecordList mode visible until DataApplication replaces this engine.
+        this.viewModeSelect.value = this.options.viewMode;
+        void this.onViewModeChange?.("datatable");
+        return;
+      }
+      this.options.viewMode = normalizeViewMode(mode);
       this._render();
+      void this.onViewModeChange?.(this.options.viewMode);
     });
     this.delegate(this.container, "click", "[data-page]", (event, target) => {
       event.preventDefault();
@@ -587,6 +598,8 @@ export class HRecordList extends HBaseWidget {
 
   _applyControlVisibility() {
     const controls = this.options.controls;
+    const datatableOption = this.viewModeSelect?.querySelector('option[value="datatable"]');
+    if (datatableOption) datatableOption.hidden = this.options.engineSwitch !== true;
     this.$$("[data-control]").forEach((el) => {
       const name = el.dataset.control;
       el.classList.toggle(
@@ -654,6 +667,8 @@ export class HRecordList extends HBaseWidget {
       "--h-recordlist-font-size",
       `${this.options.fontSize}px`,
     );
+    if (this.pageSizeSelect) this.pageSizeSelect.value = String(this.options.pageLength);
+    if (this.viewModeSelect) this.viewModeSelect.value = this.options.viewMode;
     this._applyControlVisibility();
     this._render();
   }
