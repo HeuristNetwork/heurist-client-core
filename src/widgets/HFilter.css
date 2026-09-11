@@ -1,0 +1,84 @@
+.h-filter {
+  display:flex;
+  flex-direction:column;
+  min-width:240px;
+  min-height:0;
+  gap:10px;
+  padding:8px;
+  background:var(--h-color-bg);
+}
+.h-filter-section {
+  min-width:0;
+  border:1px solid var(--h-color-border);
+  border-radius:var(--h-radius);
+  background:var(--h-color-bg);
+  padding:8px;
+}
+.h-filter-section-title {
+  margin:0 0 6px;
+  font-weight:600;
+  color:var(--h-color-text);
+}
+.h-filter-query-row,
+.h-filter-controls {
+  display:flex;
+  align-items:center;
+  gap:var(--h-gap);
+  min-width:0;
+}
+.h-filter-query-row .h-filter-query { min-width:100px; }
+.h-filter-controls { flex-wrap:wrap; }
+.h-filter-controls [data-role="filter-search"] { min-width:120px; }
+.h-filter-controls .h-select { max-width:180px; }
+.h-filter-list {
+  margin-top:7px;
+  max-height:260px;
+  min-height:44px;
+  overflow:auto;
+  border-top:1px solid var(--h-color-border);
+}
+.h-filter-row {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  width:100%;
+  min-height:31px;
+  padding:5px 7px;
+  border:0;
+  border-bottom:1px solid color-mix(in srgb, var(--h-color-border) 70%, transparent);
+  background:transparent;
+  color:var(--h-color-text);
+  font:inherit;
+  text-align:left;
+  cursor:pointer;
+}
+.h-filter-row:hover { background:var(--h-color-surface-hover); }
+.h-filter-row.is-active,
+.h-filter-row[aria-selected="true"] {
+  background:var(--h-color-selected);
+  box-shadow:inset 3px 0 0 var(--h-color-selected-border);
+}
+.h-filter-row-title {
+  flex:1 1 auto;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.h-filter-row-meta {
+  flex:0 0 auto;
+  color:var(--h-color-text-muted);
+  font-size:var(--h-font-size-small);
+}
+.h-filter-status {
+  min-height:16px;
+  margin-top:4px;
+  font-size:var(--h-font-size-small);
+}
+.h-filter-empty { padding:10px 7px; text-align:center; }
+.h-filter-form { min-width:0; }
+@media (max-width:560px) {
+  .h-filter-query-row { flex-wrap:wrap; }
+  .h-filter-query-row .h-filter-query { flex-basis:100%; }
+}

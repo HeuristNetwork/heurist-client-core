@@ -6,6 +6,7 @@
 import { HBaseWidget } from './HBaseWidget.js';
 import { HMsg } from '../ui/HMsg.js';
 import { $HR } from '../ui/i18n/index.js';
+import './HFilter.css';
 
 const DEFAULT_OPTIONS = Object.freeze({
   showSearchTools: true,

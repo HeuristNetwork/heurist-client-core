@@ -12,57 +12,45 @@
  * @license     https://www.gnu.org/licenses/gpl-3.0.txt GNU License 3.0
  * @author      Artem Osmakov <osmakov@gmail.com>
  */
+import { HMsg } from './HMsg.js';
 import { $HR, getActiveLanguage, getAssetBaseUrl } from './i18n/HResource.js';
+
+let helpDialogSeq = 0;
 
 export class InlineHelp {
   constructor({ parent = null, moduleName } = {}) {
     if (!moduleName) throw new Error('InlineHelp requires a moduleName');
     this.moduleName = moduleName;
     this.parent = parent;
-    this.element = null;
-    this.onKeyDown = (event) => { if (event.key === 'Escape') this.close(); };
+    this.dialogId = `dialog-inline-help-${++helpDialogSeq}`;
+    this.dlg = null;
   }
 
   open() {
-    if (this.element) return;
+    const dlg = HMsg.getMsgDlg(this.dialogId);
+    (this.parent || document.body).append(dlg);
+    dlg.classList.add('h-dialog-fullscreen');
 
-    this.element = document.createElement('div');
-    this.element.className = 'heurist-help-backdrop';
-    this.element.setAttribute('role', 'dialog');
-    this.element.setAttribute('aria-modal', 'true');
+    const title = dlg.querySelector('.h-dialog-title');
+    title.textContent = $HR('Help');
+    dlg.querySelector('.h-dialog-footer').hidden = true;
 
-    const dialog = document.createElement('div');
-    dialog.className = 'heurist-help-dialog';
-
-    const header = document.createElement('div');
-    header.className = 'heurist-help-header';
-    const heading = document.createElement('strong');
-    heading.className = 'h-i18n';
-    heading.textContent = 'Help';
-    const close = document.createElement('button');
-    close.type = 'button';
-    close.className = 'heurist-help-close';
-    close.setAttribute('aria-label', $HR('Close'));
-    close.textContent = '×';
-    close.addEventListener('click', () => this.close());
-    header.append(heading, close);
+    const body = dlg.querySelector('.h-dialog-body');
+    body.classList.add('h-dialog-body-flush');
+    body.replaceChildren();
 
     const frame = document.createElement('iframe');
-    frame.className = 'heurist-help-frame';
+    frame.className = 'h-dialog-iframe';
     frame.src = this.manualUrl();
     frame.title = $HR('Help');
+    body.append(frame);
 
-    dialog.append(header, frame);
-    this.element.append(dialog);
-    (this.parent || document.body).append(this.element);
-    document.addEventListener('keydown', this.onKeyDown);
-    close.focus();
+    this.dlg = dlg;
+    dlg.showModal();
   }
 
   close() {
-    document.removeEventListener('keydown', this.onKeyDown);
-    this.element?.remove();
-    this.element = null;
+    this.dlg?.close();
   }
 
   manualUrl() {

@@ -18,6 +18,7 @@
     "./widgets": "./src/widgets/index.js",
     "./widgets/*": "./src/widgets/*",
     "./ui/heurist-ui.css": "./src/ui/heurist-ui.css",
+    "./ui/heurist-module.css": "./src/ui/heurist-module.css",
     "./utils": "./src/utils/index.js"
   },
   "scripts": {

@@ -18,6 +18,7 @@
 import { HBaseWidget } from "./HBaseWidget.js";
 import { $HR } from "../ui/index.js";
 import template from "./HRecordList.html?raw";
+import "./HRecordList.css";
 
 const PAGE_SIZES = [50, 100, 500, 1000, 5000];
 const VIEW_MODES = ["table", "card", "row", "big"];

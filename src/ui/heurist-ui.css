@@ -188,200 +188,25 @@
 .h-coverall-message { position:absolute; top:30px; left:30px; }
 
 
-/* Inline Help ----------------------------------------------------------- */
-.heurist-help-backdrop {
-  position:absolute;
-  z-index:65000;
-  inset:0;
-  display:flex;
-  align-items:stretch;
-  justify-content:stretch;
-  padding:12px;
-  box-sizing:border-box;
-  background:var(--h-color-backdrop);
-}
-.heurist-help-dialog {
+/* Full-viewport <dialog> modifiers (used by InlineHelp for the manual iframe) - */
+.h-dialog-fullscreen {
   display:flex;
   flex-direction:column;
-  width:100%;
-  height:100%;
-  min-width:0;
-  min-height:0;
-  overflow:hidden;
-  background:var(--h-color-bg);
-  color:var(--h-color-text);
-  border:1px solid var(--h-color-border);
-  border-radius:var(--h-radius);
-  box-shadow:var(--h-shadow-dialog);
+  width:calc(100vw - 24px);
+  height:calc(100vh - 24px);
+  max-height:calc(100vh - 24px);
 }
-.heurist-help-header {
-  display:flex;
-  align-items:center;
-  flex:0 0 auto;
-  min-height:34px;
-  padding:0 6px 0 10px;
-  border-bottom:1px solid var(--h-color-border);
-  background:var(--h-color-surface);
-}
-.heurist-help-header strong { color:var(--h-color-primary); }
-.heurist-help-close {
-  margin-left:auto;
-  width:28px;
-  height:28px;
-  padding:0;
-  border:0;
-  border-radius:var(--h-radius);
-  background:transparent;
-  color:var(--h-color-text);
-  font:20px/1 var(--h-font-family);
-  cursor:pointer;
-}
-.heurist-help-close:hover { background:var(--h-color-surface-hover); }
-.heurist-help-frame { display:block; flex:1 1 auto; width:100%; min-height:0; border:0; background:var(--h-color-bg); }
-
-/* HRecordList ----------------------------------------------------------- */
-.h-recordlist { min-height:0; font-size:var(--h-recordlist-font-size,14px); color:var(--h-color-text); }
-.h-recordlist-toolbar,.h-recordlist-footer { flex:0 0 auto; min-height:42px; padding:4px; font-size:var(--h-font-size); color:var(--h-color-text-muted); background:var(--h-color-surface); }
-.h-recordlist-toolbar { border-bottom:1px solid var(--h-color-border); padding-right:310px; }
-.h-recordlist-footer { border-top:1px solid var(--h-color-border); justify-content:space-between; gap:8px; }
-.h-recordlist-pagination { margin:auto; }
-.h-recordlist-search { width:min(260px,100%); }
-.h-recordlist-search .h-input { width:100%; min-height:26px; }
-.h-recordlist-toolbar { flex-wrap:wrap; }
-.h-recordlist-footer { align-items:center; }
-.h-recordlist .h-select { min-height:26px; padding:2px 24px 2px 6px; }
-.h-recordlist-page-size { width:76px; }
-.h-recordlist-view-mode { width:112px; }
-.h-recordlist-content { min-height:0; overflow:auto; padding:3px; }
-.h-recordlist-content[data-view-mode="card"] { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); align-content:start; gap:6px; }
-.h-recordlist-content[data-view-mode="row"] { display:flex; flex-flow:row nowrap; align-items:stretch; gap:6px; }
-.h-recordlist-content[data-view-mode="big"] { display:flex; flex-direction:column; gap:6px; }
-.h-recordlist-item { position:relative; isolation:isolate; box-sizing:border-box; border:1px solid var(--h-color-border); background:var(--h-color-bg); cursor:pointer; }
-.h-recordlist-item:hover { border-color:var(--h-color-selected-border); background:var(--h-color-surface-hover); }
-.h-recordlist-item.h-recordlist-selected { border-color:var(--h-color-selected-border); background:var(--h-color-selected); box-shadow:inset 0 0 0 1px var(--h-color-selected-border); }
-.h-recordlist-table { display:flex; flex-flow:row nowrap; align-items:center; gap:7px; min-height:31px; padding:3px 6px; border-width:0 0 1px; white-space:nowrap; }
-.h-recordlist-table > * { flex-shrink:0; }
-.h-recordlist-table .h-recordlist-title { flex:1 1 auto; min-width:0; overflow:hidden; white-space:nowrap; }
-.h-recordlist-table .h-recordlist-admin { flex-wrap:nowrap; }
-.h-recordlist-admin { color:var(--h-color-text-muted); font-size:.86em; white-space:nowrap; }
-.h-recordlist-admin { display:flex; align-items:center; gap:3px; }
-.h-recordlist-admin .fa-solid { width:12px; font-size:12px; text-align:center; }
-.h-recordlist-owner { display:inline-block; flex:0 0 85px; width:75px; overflow:hidden; text-overflow:ellipsis; color:var(--h-color-text-muted); padding-left: 4px}
-.h-recordlist-bookmark.is-placeholder { visibility:hidden; }
-.h-recordlist-visibility { display:inline-flex; width:12px; height:12px; align-items:center; justify-content:center; }
-.h-recordlist-rectype-icon { display:inline-block; flex:0 0 18px; width:18px !important; height:18px !important; object-fit:contain; }
-.h-recordlist-title { min-width:0; overflow:hidden; text-overflow:ellipsis; }
-.h-recordlist-actions { display:flex; align-items:center; gap:2px; opacity:0; }
-.h-recordlist-item:hover .h-recordlist-actions { opacity:1; }
-.h-recordlist-template-item > .h-recordlist-actions { position:absolute; z-index:10; top:4px; right:4px; padding:2px; background:color-mix(in srgb, var(--h-color-bg) 86%, transparent); border-radius:2px; }
-.h-recordlist-icon-button { width:16px; height:16px; border:0; background:transparent; color:var(--h-color-text-muted); padding:2px; font-size:12px; line-height:12px; }
-.h-recordlist-card { min-width:0; min-height:150px; padding:8px; display:grid; grid-template-rows:auto minmax(0,1fr) auto; overflow:hidden; }
-.h-recordlist-card-top { display:flex; justify-content:flex-start; min-height:22px; }
-.h-recordlist-thumbnail { display:block; width:100%; height:86px; object-fit:contain; margin:2px auto; }
-.h-recordlist-thumbnail-fallback { opacity:.5; }
-.h-recordlist-card .h-recordlist-title { min-width:0; text-align:center; white-space:normal; overflow-wrap:anywhere; }
-.h-recordlist-card > .h-recordlist-template-content { min-height:0; max-width:100%; overflow:hidden; overflow-wrap:anywhere; }
-.h-recordlist-card > .h-recordlist-template-content > * { max-width:100%; box-sizing:border-box; }
-.h-recordlist-row { flex:0 0 280px; min-height:150px; padding:8px; }
-.h-recordlist-big { flex:0 0 auto; height:auto; min-height:240px; padding:10px; }
-.h-recordlist-template-content { position:relative; z-index:0; display:flow-root; min-width:0; height:auto; }
-.h-recordlist-big .h-recordlist-template-content.h-recordlist-placeholder { min-height:240px; }
-.h-recordlist-placeholder { min-height:90px; display:grid; place-items:center; color:var(--h-color-text-muted); }
-.h-recordlist-message { height:100%; display:grid; place-items:center; color:var(--h-color-text-muted); }
-.h-recordlist-hidden { display:none !important; }
-.h-recordlist .h-dropdown .h-menu { min-width:210px; }
-.h-recordlist .h-dropdown:last-child .h-menu { min-width:110px; }
-.h-recordlist-loading { cursor:progress; opacity:.7; }
-@media (max-width:800px) { .h-recordlist-toolbar { padding-right:4px; } }
-
-/* HFilter --------------------------------------------------------------- */
-.h-filter {
-  display:flex;
-  flex-direction:column;
-  min-width:240px;
-  min-height:0;
-  gap:10px;
-  padding:8px;
-  background:var(--h-color-bg);
-}
-.h-filter-section {
-  min-width:0;
-  border:1px solid var(--h-color-border);
-  border-radius:var(--h-radius);
-  background:var(--h-color-bg);
-  padding:8px;
-}
-.h-filter-section-title {
-  margin:0 0 6px;
-  font-weight:600;
-  color:var(--h-color-text);
-}
-.h-filter-query-row,
-.h-filter-controls {
-  display:flex;
-  align-items:center;
-  gap:var(--h-gap);
-  min-width:0;
-}
-.h-filter-query-row .h-filter-query { min-width:100px; }
-.h-filter-controls { flex-wrap:wrap; }
-.h-filter-controls [data-role="filter-search"] { min-width:120px; }
-.h-filter-controls .h-select { max-width:180px; }
-.h-filter-list {
-  margin-top:7px;
-  max-height:260px;
-  min-height:44px;
-  overflow:auto;
-  border-top:1px solid var(--h-color-border);
-}
-.h-filter-row {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:8px;
-  width:100%;
-  min-height:31px;
-  padding:5px 7px;
-  border:0;
-  border-bottom:1px solid color-mix(in srgb, var(--h-color-border) 70%, transparent);
-  background:transparent;
-  color:var(--h-color-text);
-  font:inherit;
-  text-align:left;
-  cursor:pointer;
-}
-.h-filter-row:hover { background:var(--h-color-surface-hover); }
-.h-filter-row.is-active,
-.h-filter-row[aria-selected="true"] {
-  background:var(--h-color-selected);
-  box-shadow:inset 3px 0 0 var(--h-color-selected-border);
-}
-.h-filter-row-title {
+.h-dialog-body-flush {
   flex:1 1 auto;
-  min-width:0;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
+  min-height:0;
+  padding:0;
+  max-height:none;
+  display:flex;
 }
-.h-filter-row-meta {
-  flex:0 0 auto;
-  color:var(--h-color-text-muted);
-  font-size:var(--h-font-size-small);
-}
-.h-filter-status {
-  min-height:16px;
-  margin-top:4px;
-  font-size:var(--h-font-size-small);
-}
-.h-filter-empty { padding:10px 7px; text-align:center; }
-.h-filter-form { min-width:0; }
-@media (max-width:560px) {
-  .h-filter-query-row { flex-wrap:wrap; }
-  .h-filter-query-row .h-filter-query { flex-basis:100%; }
-}
+.h-dialog-iframe { flex:1 1 auto; width:100%; height:100%; border:0; }
 
-/* Shared compact module actions. */
-.heurist-module-icon-button { border:0; border-radius:var(--h-radius); background:transparent; padding:4px; cursor:pointer; color:var(--h-color-icon); font-size:14px; }
-.heurist-module-icon-button:hover:not(:disabled) { color:var(--h-color-icon-hover); background:var(--h-color-surface-hover); }
-.heurist-module-icon-button:focus-visible { outline:2px solid var(--h-color-primary); outline-offset:1px; }
-.heurist-module-icon-button:disabled { opacity:.55; cursor:default; }
+/* Shared compact icon button. */
+.heurist-icon-button { border:0; border-radius:var(--h-radius); background:transparent; padding:4px; cursor:pointer; color:var(--h-color-icon); font-size:14px; }
+.heurist-icon-button:hover:not(:disabled) { color:var(--h-color-icon-hover); background:var(--h-color-surface-hover); }
+.heurist-icon-button:focus-visible { outline:2px solid var(--h-color-primary); outline-offset:1px; }
+.heurist-icon-button:disabled { opacity:.55; cursor:default; }
