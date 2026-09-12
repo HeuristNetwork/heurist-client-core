@@ -38,6 +38,7 @@ export class HRecordList extends HBaseWidget {
     onViewRecord,
     onExport,
     onViewModeChange,
+    onDataSourceAction,
   }) {
     this.attach(container, normalizeOptions(options));
     Object.assign(this, {
@@ -50,6 +51,7 @@ export class HRecordList extends HBaseWidget {
       onViewRecord,
       onExport,
       onViewModeChange,
+      onDataSourceAction,
     });
     this.selected = new Set();
     this.collected = new Set();
@@ -89,6 +91,7 @@ export class HRecordList extends HBaseWidget {
     this.pageSizeSelect.value = String(this.options.pageLength);
     this.viewModeSelect.value = this.options.viewMode;
     this._applyControlVisibility();
+    this._createDataSourceActions();
     this._updateSelectionButton();
     let searchTimer;
     this.listen(search, "input", () => {
@@ -178,6 +181,50 @@ export class HRecordList extends HBaseWidget {
 
   _closeDropdown(target) {
     target?.closest("details.h-dropdown")?.removeAttribute("open");
+  }
+
+  _createDataSourceActions() {
+    const host = document.createElement("span");
+    host.className = "h-recordlist-source-actions";
+    const definitions = [
+      ["workspace", "fa-regular fa-object-group", "Add to workspace"],
+      ["save-filter", "fa-regular fa-floppy-disk", "Save as Filter"],
+      ["save-source", "fa-solid fa-database", "Save as Source"],
+    ];
+    for (const [action, icon, title] of definitions) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "h-recordlist-source-action";
+      button.dataset.sourceAction = action;
+      button.title = $HR(title);
+      button.setAttribute("aria-label", button.title);
+      button.innerHTML = `<i class="${icon}" aria-hidden="true"></i>`;
+      host.append(button);
+    }
+    host.hidden = this.options.sourceActionsEnabled !== true;
+    const selection = this.$('[data-control="selectionActions"]');
+    selection?.after(host);
+    this.listen(host, "click", (event) => {
+      const button = event.target.closest("[data-source-action]");
+      if (!button) return;
+      Promise.resolve(this.onDataSourceAction?.(button.dataset.sourceAction))
+        .catch(() => {});
+    });
+    this.sourceActions = host;
+    this.workspaceButton = host.querySelector('[data-source-action="workspace"]');
+  }
+
+  async setDataSourceActions({ enabled = false, inWorkspace = false } = {}) {
+    if (this.sourceActions) this.sourceActions.hidden = !enabled;
+    if (this.workspaceButton) {
+      this.workspaceButton.classList.toggle("active", inWorkspace);
+      const icon = this.workspaceButton.querySelector("i");
+      icon?.classList.toggle("fa-regular", !inWorkspace);
+      icon?.classList.toggle("fa-solid", inWorkspace);
+      const title = $HR(inWorkspace ? "Remove from workspace" : "Add to workspace");
+      this.workspaceButton.title = title;
+      this.workspaceButton.setAttribute("aria-label", title);
+    }
   }
 
   async setData({ dataset, records = [], meta = {}, pagination = {} }) {
@@ -671,6 +718,8 @@ export class HRecordList extends HBaseWidget {
     if (this.pageSizeSelect) this.pageSizeSelect.value = String(this.options.pageLength);
     if (this.viewModeSelect) this.viewModeSelect.value = this.options.viewMode;
     this._applyControlVisibility();
+    if (this.sourceActions)
+      this.sourceActions.hidden = this.options.sourceActionsEnabled !== true;
     this._render();
   }
 

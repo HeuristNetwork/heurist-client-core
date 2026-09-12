@@ -18,9 +18,16 @@ import { $HR, getActiveLanguage, getAssetBaseUrl } from './i18n/HResource.js';
 let helpDialogSeq = 0;
 
 export class InlineHelp {
-  constructor({ parent = null, moduleName } = {}) {
+  /**
+   * @param {{parent?:Element, moduleName:string, fileBase?:string}} options
+   *   `fileBase` overrides the `{moduleName}UserManual` file-name prefix for
+   *   manuals that don't follow that convention (e.g. topic-specific help
+   *   pages shared across modules).
+   */
+  constructor({ parent = null, moduleName, fileBase = null } = {}) {
     if (!moduleName) throw new Error('InlineHelp requires a moduleName');
     this.moduleName = moduleName;
+    this.fileBase = fileBase || `${moduleName}UserManual`;
     this.parent = parent;
     this.dialogId = `dialog-inline-help-${++helpDialogSeq}`;
     this.dlg = null;
@@ -57,6 +64,6 @@ export class InlineHelp {
     const language = getActiveLanguage();
     const suffix = language.charAt(0).toUpperCase() + language.slice(1);
     const base = String(getAssetBaseUrl() || '').replace(/\/+$/, '');
-    return `${base}/${this.moduleName}UserManual${suffix}.htm`;
+    return `${base}/${this.fileBase}${suffix}.htm`;
   }
 }

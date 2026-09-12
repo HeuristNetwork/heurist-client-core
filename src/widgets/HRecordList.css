@@ -6,6 +6,11 @@
 .h-recordlist-search { width:min(260px,100%); }
 .h-recordlist-search .h-input { width:100%; min-height:26px; }
 .h-recordlist-toolbar { flex-wrap:wrap; }
+.h-recordlist-source-actions { display:inline-flex; align-items:center; gap:3px; }
+.h-recordlist-source-actions[hidden] { display:none !important; }
+.h-recordlist-source-action { display:inline-flex; align-items:center; justify-content:center; min-width:26px; min-height:26px; padding:2px 7px; border:1px solid var(--h-color-border); border-radius:var(--h-radius); background:var(--h-color-bg); color:var(--h-color-text); cursor:pointer; }
+.h-recordlist-source-action:hover { background:var(--h-color-surface-hover); border-color:var(--h-color-border-strong); }
+.h-recordlist-source-action.active { color:var(--h-color-primary); border-color:var(--h-color-primary); }
 .h-recordlist-footer { align-items:center; }
 .h-recordlist .h-select { min-height:26px; padding:2px 16px 2px 6px; }
 .h-recordlist-page-size { width:76px; }

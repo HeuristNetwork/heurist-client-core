@@ -3,31 +3,54 @@
   flex-direction:column;
   min-width:240px;
   min-height:0;
-  gap:10px;
+  gap:8px;
   padding:8px;
   background:var(--h-color-bg);
 }
-.h-filter-section {
+.h-filter-query-row {
+  display:flex;
+  align-items:stretch;
+  gap:var(--h-gap);
+  min-width:0;
+}
+.h-filter-query-row .h-filter-query {
+  flex:1 1 auto;
+  min-width:100px;
+  resize:vertical;
+  box-sizing:border-box;
+  font:inherit;
+}
+.h-filter-query-actions {
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  flex:0 0 auto;
+  gap:6px;
+}
+.h-filter-query-actions-row {
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.h-filter-tools {
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+.h-filter-subview {
   min-width:0;
   border:1px solid var(--h-color-border);
   border-radius:var(--h-radius);
   background:var(--h-color-bg);
   padding:8px;
 }
-.h-filter-section-title {
-  margin:0 0 6px;
-  font-weight:600;
-  color:var(--h-color-text);
-}
-.h-filter-query-row,
 .h-filter-controls {
   display:flex;
   align-items:center;
   gap:var(--h-gap);
+  flex-wrap:wrap;
   min-width:0;
 }
-.h-filter-query-row .h-filter-query { min-width:100px; }
-.h-filter-controls { flex-wrap:wrap; }
 .h-filter-controls [data-role="filter-search"] { min-width:120px; }
 .h-filter-controls .h-select { max-width:180px; }
 .h-filter-list {
@@ -73,12 +96,25 @@
 }
 .h-filter-status {
   min-height:16px;
-  margin-top:4px;
   font-size:var(--h-font-size-small);
 }
 .h-filter-empty { padding:10px 7px; text-align:center; }
 .h-filter-form { min-width:0; }
+
+/* Post-parse "sentence" panel (queryDescribe() readout of h-filter-query). */
+.h-fih-sentence {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 8px;
+  background:var(--h-color-selected);
+  border-radius:var(--h-radius);
+  font-size:0.95em;
+}
+.h-fih-sentence-text { flex:1 1 auto; }
+
 @media (max-width:560px) {
   .h-filter-query-row { flex-wrap:wrap; }
   .h-filter-query-row .h-filter-query { flex-basis:100%; }
+  .h-filter-query-actions { flex-direction:row; flex-wrap:wrap; }
 }
